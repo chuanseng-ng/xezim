@@ -8,6 +8,17 @@ in [docs/user-guide.md](docs/user-guide.md); building and contributing are in
 
 ### Unreleased
 
+**Correctness**
+
+* An intra-assignment delay or event control captures its right-hand side
+  against the target, as the assignment without the timing control
+  evaluates it (§9.4.5, §10.9, §11.6.1, #1162). An assignment pattern for an
+  unpacked array, row, struct or queue (`wa = #1 '{3, 4};`,
+  `s = @(e) '{7, 8};`, `wn <= @(e) '{5, 6};`) stored nothing; its items are
+  now captured when the statement runs and stored after the delay. An
+  expression keeps the target's width: `y = #1 a + b` with 4-bit operands
+  into an 8-bit `y` stored 0, not 16.
+
 ### 0.11.6 — lower elaboration memory, constant expressions and runtime correctness (November 2026)
 
 **Performance**
